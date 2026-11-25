@@ -1,6 +1,7 @@
 import sqlite3
 from pathlib import Path
 from fetch_deals import fetch_deals
+from clean import clean_deal
 
 DB_PATH = Path("data/deals.db")
 
@@ -16,10 +17,10 @@ def create_table():
                     title TEXT NOT NULL,
                     storeID TEXT NOT NULL,
                     gameID TEXT,
-                    salePrice TEXT,
-                    normalPrice TEXT,
-                    savings TEXT,
-                    metacriticscore TEXT
+                    salePrice REAL,
+                    normalPrice REAL,
+                    savings REAL,
+                    metacriticScore INTEGER
                     )
                 """)
     conn.commit()
@@ -28,6 +29,7 @@ def create_table():
 def save_deals(deals):
     "Inserts a list of deal dictionaries into the database, replacing any with the same dealID"
     create_table()
+    cleaned_rows = [clean_deal(deal) for deal in deals]
     rows = [
         (
         deal["dealID"],
@@ -39,8 +41,9 @@ def save_deals(deals):
         deal.get("savings"),
         deal.get("metacriticScore")
         )
-        for deal in deals
+        for deal in cleaned_rows
     ]
+
 
     conn = sqlite3.connect(DB_PATH)
     cursor = conn.cursor()
@@ -57,6 +60,8 @@ def save_deals(deals):
     return len(rows)
 
 if __name__ == "__main__":
+    deals = fetch_deals()
+    print(list(clean_deal(deals[0]).keys()))
     deals = fetch_deals()
     count = save_deals(deals)
     print(f"Saved {count} deals.")

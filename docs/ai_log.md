@@ -77,4 +77,14 @@ with *why*, testing, and next steps.
 **Changed:** Wrote the README with all sections, including the
 `None`-title bug as a design decision.
 
-(Add more entries as you continue — even rough notes are fine.)
+### 9. Writing this AI log
+**Asked:** Claude to draft this AI log based on our conversation, including
+the README declaration entry.
+**Learned:** A log of AI usage is only useful if it's honest about *all*
+the AI usage — including the log itself. Leaving a coaching prompt
+visible in a document that claims to record AI usage would have
+undermined the whole thing.
+**Changed:** Kept Claude's draft as the basis, noted here that the log
+was drafted with Claude's help. The technical entries reflect real
+changes I made and understand; this note records that the drafting was
+AI-assisted.

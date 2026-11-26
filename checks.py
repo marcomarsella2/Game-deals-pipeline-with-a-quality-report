@@ -23,7 +23,7 @@ def check_missing_titles(deals):
             "detail": f"title is {deal.get('title')!r}",
         }
         for deal in deals
-        if not deal.get('title').strip()
+        if not (deal.get("title") or "").strip()
     ]
 
 def check_suspicious_prices(deals):
@@ -62,6 +62,7 @@ if __name__ == "__main__":
     from clean import clean_deal
 
     deals = [clean_deal(d) for d in fetch_deals()]
+
     issues = run_all_checks(deals)
     print(f"{len(issues)} issue(s) found")
     for issue in issues:
